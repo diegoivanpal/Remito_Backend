@@ -1,3 +1,5 @@
+from datetime import datetime
+
 def remito_schema(remito) -> dict:
     return {"id": str(remito["_id"]),
             "number": remito["number"],

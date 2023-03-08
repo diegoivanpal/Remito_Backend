@@ -2,10 +2,16 @@ import json
 from db.schemas.remito import remito_schema,remitos_schema
 from db.models.remito import Remito, Device
 from db.client import db_client
+from datetime import datetime, date
 
+handler = lambda obj: (
+    obj.isoformat()
+    if isinstance(obj, (datetime, date))
+    else obj.__dict__
+)
 
 def to_dict(obj):
-    return json.loads(json.dumps(obj, default=lambda o: o.__dict__))
+    return json.loads(json.dumps(obj, default=handler ))
 
 def search_remito(field: str, key):
     try:

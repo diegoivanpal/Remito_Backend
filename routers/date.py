@@ -15,10 +15,14 @@ router = APIRouter( prefix="/date",
                    responses={status.HTTP_404_NOT_FOUND: {"message": "No encontrado"}}, route_class=VerifyTokenRoute)
 
 @router.post("/")
-async def search_remito_by_dates(date : Date ) :
+async def search_remito_by_dates(date : Date) :
     try:
-        remito = remitos_schema(db_client.remitos.find( { date: { "$gte" : date.date_strt ,"$lte" : date.date_end} }))
-        return Remito(**remito)
+        print(date.date_strt)
+        print(date.date_end )
+        #remito = remitos_schema(db_client.remitos.find({ "date": { "$gte": date.date_strt } }))
+        remito = remitos_schema(db_client.remitos.find({"$and": [{ "date": { "$gte": date.date_strt } }, { "date": { "$lte": date.date_end } }],
+      }))
+        return remito
     except:
         return {"error": "No se ha encontrado el remito"}  
 

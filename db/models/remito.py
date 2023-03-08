@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from datetime import datetime
+from datetime import date, datetime
 
 class Device(BaseModel):
     description: str 
@@ -8,15 +8,15 @@ class Device(BaseModel):
 class Remito(BaseModel):   
     id: str | None 
     number: int
-    date: str
+    date: datetime| None 
     from_workshop: str
     to_workshop: str
     user: str
     devices: list[Device] 
 
 class Date(BaseModel):
-    date_strt: str
-    date_end: str
+    date_strt: datetime
+    date_end: datetime
 
 
    

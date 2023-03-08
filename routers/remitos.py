@@ -23,11 +23,10 @@ async def fetch_remito(id: str):
 @router.post("/")
 async def add_remito(remito: Remito):
 
-    remito.date = str(date.today())
+    
     remito.number = db_client.remitos.count_documents({}) + 1
-    print(remito)    
-    new_remito = to_dict(remito)
-    print(new_remito)  
+    new_remito = to_dict(remito)  
+    new_remito["date"] = datetime.utcnow()   
     id = db_client.remitos.insert_one(new_remito).inserted_id
     return str(id)
 
